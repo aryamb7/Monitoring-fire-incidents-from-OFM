@@ -1,3 +1,5 @@
+
+
 smp_size <- floor(0.75 * nrow(main_data))
 set.seed(123)
 train_ind <- sample(seq_len(nrow(main_data)), size = smp_size)
@@ -26,6 +28,59 @@ for(i in 1:10){
 write_xlsx(x=testData,path="testDatafold.xlsx",col_names = TRUE)
 sapply(test, function(x) sum(is.na(x)))
 sapply(train, function(x) sum(is.na(x)))
+
+library(dplyr)
+
+mutate(df, train)
+
+PATH <- "C:\Users\User\Documents\big data project\FIRE MONITORING1\train"
+df_train <- read.csv(PATH, sep = ",")
+
+list_na <- colnames(df_train)[ apply(df_train, 8, anyNA) ]
+
+sum(is.na(test))
+sum(is.na(train))
+sum(is.na(main_data))
+na.omit(main_data)
+any(is.na(main_data))
+
+
+
+
+sum(is.na(main_data))
+str(main_data)
+complete.cases(main_data)
+x<-na.omit(main_data)
+str(x)
+
+#checking how many missing values in test train and main data
+sum(is.na(test))
+sum(is.na(train))
+sum(is.na(main_data))
+
+
+#cleaning data
+x<-na.omit(main_data)
+str(x)
+
+
+#checking if any missing values
+sum(is.na(x))
+
+# dividing the cleaned data x into training and testing data
+smp_size <- floor(0.75 * nrow(x))
+set.seed(123)
+train_indx <- sample(seq_len(nrow(x)), size = smp_size)
+
+trainx <- x[train_indx, ]
+testx <- x[-train_indx, ]
+
+library(writexl)
+write_xlsx(x=testx,path="testx.xlsx",col_names = TRUE)
+write_xlsx(x=trainx,path="trainx.xlsx",col_names = TRUE)
+write_xlsx(x=x,path="x.xlsx",col_names = TRUE)
+
+
 
 
 
