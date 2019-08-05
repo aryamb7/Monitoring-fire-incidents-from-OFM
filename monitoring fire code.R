@@ -228,8 +228,93 @@ library(ggplot2)
   barplot(Incidentfi[order(Incidentfi, decreasing=TRUE)])
   barplot(Incident,col=rainbow(50))
   
+#finding minimum among lattitude
+  min(trainx$LATITUDE)
+  
+#finding max among lattitude  
+  max(trainx$LATITUDE)
+  
+#finding start date in train data  
+min(trainx$`TFS Alarm Time`)  
+
+#finding end date in train data 
+max(trainx$`TFS Alarm Time`) 
+
+#finding start date in test data 
+min(testx$`TFS Alarm Time`)
+
+#finding end date in test data 
+max(testx$`TFS Alarm Time`) 
+
+#finding numeric columns
+lapply(trainx,class)
+
+# Boxplot
+boxplot(`Event Alarm Level`~`Incident Station Area`,data=trainx, main="BOX PLOT", 
+        xlab="Station Area", ylab="category")+
+coord_flip(ylim=c(0,2))
+
+
+
+library(ggplot2)
+library(dplyr)
+ggplot(trainx,aes(x=`Event Alarm Level`,y=`Incident Station Area`))+
+geom_boxplot()+
+coord_flip(ylim=c(0,2))
+
+
+library(Ryacas)
+ggplot(trainx,aes(x=`Event Alarm Level`,y=`Incident Station Area`))+
+  geom_boxplot(fill="red")
+
+
+ #correlogram with pie trying colour
+library(corrgram)
+col.corrgram <-function(ncol){
+  colorRampPalette(c("darkgoldenrod4","burlywood1","darkkhaki","darkgreen"))(ncol)
+}
+corrgram(trainx,order=TRUE,lower.panel=panel.shade,upper.panel=panel.pie,text.panel=panel.txt,main="CORRELATION MATRIX USING CORRELOGRAM")
+
+
+#correlogram without pie
+library(corrgram)
+corrgram(trainx,order=NULL,lower.panel=panel.shade,upper.panel=NULL,text.panel=panel.txt,main="CORRELOGRAM")
+
+#correlogram without pie trying colour
+col.corrgram <-function(ncol){
+   colorRampPalette(c("darkblue","lightblue","violet","blue"))(ncol)
+}
+corrgram(trainx,order=NULL,lower.panel=panel.shade,upper.panel=NULL,text.panel=panel.txt,main="DATA")
+
+#area chart
+library(ggplot2)
+plot=ggplot(trainx,aes(x=`Incident Ward`,y=`Persons Rescued`))+
+  geom_area(colour="black",size=.2,alpha=.8)+
+  theme_bw()+
+  #scale_x_continous(breaks=seq(0,25,5))+
+ # scale_y_continous(breaks=seq(0,155,10))+
+  ggtitle("DATA")+
+  labs(x="WARD",Y="NUMBER")
+
+#heatmap
+trainx.heatmap <-ggplot(data=trainx,mapping= aes(x=`TFS alarm Time`,y=`Call Source`))+
+              geom_title()+
+              xlab(label="Alarm Time")+ylab(label="Call Source")
+trainx.heatmap
+
+
+
+require(ggplot2)
+theme_set(theme_bw())
+ggplot(aes(x=trainx$`TFS Alarm Time`,y=trainx$`Persons Rescued`),data=trainx)+geom_line()
+
+  
+require(ggplot2)
+theme_set(theme_bw())
+ggplot(aes(x=trainx$`TFS Alarm Time`,y=trainx$`Persons Rescued`),data=trainx)+geom_point()
   
   
-
-         
-
+  
+  
+  
+  
